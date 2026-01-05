@@ -1,7 +1,130 @@
 <!DOCTYPE html>
 <html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>14岁生日倒计时 - 茹浚峰专属空间</title>
+    <style>
+        body { 
+            text-align: center; 
+            background: #0000FF; 
+            color: white; 
+            font-family: sans-serif; 
+            padding: 50px 20px; 
+            margin: 0;
+        }
+        #timer { 
+            font-size: 2.5rem; 
+            color: #ff4d4d; 
+            font-weight: bold; 
+            background: rgba(255,255,255,0.1);
+            display: inline-block;
+            padding: 15px 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .card {
+            background: rgba(255,255,255,0.15); 
+            padding: 20px; 
+            border-radius: 15px; 
+            margin: 20px auto; 
+            max-width: 600px;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+        .wish { margin-top: 20px; font-style: italic; color: #ecf0f1; }
+        button {
+            padding: 10px 20px; 
+            cursor: pointer; 
+            border-radius: 5px; 
+            border: none; 
+            font-weight: bold;
+            margin: 5px;
+        }
+        input {
+            padding: 10px; 
+            border-radius: 5px; 
+            border: none; 
+            margin-bottom: 10px;
+            color: black;
+        }
+    </style>
+</head>
 <body>
-    <h1 style="color: blue;">测试：茹sir 的空间正在重启中...</h1>
-    <p>如果你能看到这行字，说明域名和服务器是通的！</p>
+
+    <div class="card" style="max-width: 300px;">
+        <h3>🔋 能量储备：<span id="energy">0</span></h3>
+        <button onclick="addEnergy()" style="background: #27ae60; color: white;">点击注入能量</button>
+    </div>
+
+    <h1>距离 茹浚峰 14 岁生日还有：</h1>
+    <div id="timer">计算中...</div>
+    <p class="wish">“茹sir 正在为你打造一个专属空间...”</p>
+
+    <div class="card" style="border: 2px solid #3498db;">
+        <h3>🎮 第一关：记忆挑战</h3>
+        <p>老爸问你：咱们家第一辆车的颜色是什么？</p>
+        <input type="text" id="answer" placeholder="输入颜色...">
+        <button onclick="checkGame()" style="background: #3498db; color: white;">提交答案</button>
+        <div id="reward" style="display: none; margin-top: 20px;">
+            <p>🎊 答对了！这是你 3 岁时的样子：</p>
+            <img src="https://via.placeholder.com/200" alt="童年照片" style="width: 200px; border-radius: 10px;">
+            <p><b>解锁进度：1/14</b></p>
+        </div>
+    </div>
+
+    <div class="card" style="background: rgba(0,0,0,0.3);">
+        <h3>🔐 秘密基地入口</h3>
+        <button onclick="checkPassword()" style="background: #8e44ad; color: white;">验证暗号进入</button>
+    </div>
+
+    <script>
+        // 1. 能量逻辑
+        let count = 0;
+        function addEnergy() {
+            count += 1;
+            document.getElementById('energy').innerText = count;
+            if (count === 14) alert("🎉 能量充满！解锁 14 岁专属 Buff！");
+        }
+
+        // 2. 倒计时逻辑
+        function updateTimer() {
+            const birthday = new Date('2026-05-12T00:00:00');
+            const now = new Date();
+            const diff = birthday - now;
+            if (diff <= 0) {
+                document.getElementById('timer').innerText = "🎂 生日快乐！";
+                return;
+            }
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+            const mins = Math.floor((diff / 1000 / 60) % 60);
+            const secs = Math.floor((diff / 1000) % 60);
+            document.getElementById('timer').innerText = `${days}天 ${hours}小时 ${mins}分 ${secs}秒`;
+        }
+        setInterval(updateTimer, 1000);
+        updateTimer();
+
+        // 3. 游戏验证
+        function checkGame() {
+            const ans = document.getElementById('answer').value;
+            if (ans === "黄色" || ans === "yellow") { // 看到你截图里输入了黄色，这里改成了黄色
+                document.getElementById('reward').style.display = "block";
+                alert("验证成功！记忆碎片已解锁。");
+            } else {
+                alert("记错了吧？再回去翻翻老照片？");
+            }
+        }
+
+        // 4. 秘密基地暗号逻辑（修正处：已放入 script 标签内）
+        function checkPassword() {
+            const password = prompt("请输入咱们爷俩的暗号：");
+            if (password === "0512") {
+                alert("身份确认，老爸有话对你说...");
+                window.location.href = "message.html";
+            } else {
+                alert("暗号不对，再想想？");
+            }
+        }
+    </script>
 </body>
 </html>
