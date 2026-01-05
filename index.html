@@ -8,15 +8,7 @@
         .wish { margin-top: 20px; font-style: italic; }
     </style>
 </head>
-    function checkPassword() {
-    const password = prompt("请输入咱们爷俩的暗号：");
-    if (password === "0512") { // 假设密码是他的生日
-        alert("身份确认，老爸有话对你说...");
-        window.location.href = "message.html"; // 跳转到隐藏页面
-    } else {
-        alert("暗号不对，再想想？");
-    }
-}
+   
 <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px; margin: 20px auto; width: 300px;">
     <h3>🔋 能量储备：<span id="energy">0</span></h3>
     <button onclick="addEnergy()" style="padding: 10px 20px; cursor: pointer; border-radius: 5px; border: none; background: #27ae60; color: white;">
@@ -57,8 +49,44 @@
         }
         setInterval(updateTimer, 1000);
     </script>
+    <div id="game-zone" style="background: #34495e; padding: 30px; border-radius: 15px; margin-top: 30px; border: 2px solid #3498db;">
+    <h3>🎮 第一关：记忆挑战</h3>
+    <p>老爸问你：咱们家第一辆车的颜色是什么？</p>
+    <input type="text" id="answer" placeholder="输入颜色..." style="padding: 10px; border-radius: 5px; border: none;">
+    <button onclick="checkGame()" style="padding: 10px 20px; background: #3498db; color: white; border: none; cursor: pointer;">提交答案</button>
+    
+    <div id="reward" style="display: none; margin-top: 20px;">
+        <p>🎊 答对了！这是你 3 岁时的样子：</p>
+        <img src="https://via.placeholder.com/200" alt="童年照片" style="width: 200px; border-radius: 10px;">
+        <p><b>解锁进度：1/14</b></p>
+    </div>
+</div>
+
+<script>
+function checkGame() {
+    const ans = document.getElementById('answer').value;
+    // 假设答案是“白色”，你可以改成你们真实的答案
+    if (ans === "白色" || ans === "white") {
+        document.getElementById('reward').style.display = "block";
+        alert("验证成功！记忆碎片已解锁。");
+    } else {
+        alert("记错了吧？再回去翻翻老照片？");
+    }
+}
+</script>
+     function checkPassword() {
+    const password = prompt("请输入咱们爷俩的暗号：");
+    if (password === "0512") { // 假设密码是他的生日
+        alert("身份确认，老爸有话对你说...");
+        window.location.href = "message.html"; // 跳转到隐藏页面
+    } else {
+        alert("暗号不对，再想想？");
+    }
+}
 </body>
+    
 </html>
+
 
 
 
