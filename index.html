@@ -49,4 +49,13 @@
         setInterval(updateTimer, 1000);
     </script>
 </body>
+function checkPassword() {
+    const password = prompt("请输入咱们爷俩的暗号：");
+    if (password === "0512") { // 假设密码是他的生日
+        alert("身份确认，老爸有话对你说...");
+        window.location.href = "message.html"; // 跳转到隐藏页面
+    } else {
+        alert("暗号不对，再想想？");
+    }
+}
 </html>
