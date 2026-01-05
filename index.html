@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,12 +9,13 @@
             text-align: center; 
             background: #0000FF; 
             color: white; 
-            font-family: sans-serif; 
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif; 
             padding: 50px 20px; 
             margin: 0;
+            scroll-behavior: smooth; /* 让滚动更丝滑 */
         }
         #timer { 
-            font-size: 2.5rem; 
+            font-size: 2.2rem; 
             color: #ff4d4d; 
             font-weight: bold; 
             background: rgba(255,255,255,0.1);
@@ -22,179 +23,153 @@
             padding: 15px 25px;
             border-radius: 10px;
             margin: 20px 0;
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
         }
         .card {
             background: rgba(255,255,255,0.15); 
-            padding: 20px; 
+            padding: 25px; 
             border-radius: 15px; 
-            margin: 20px auto; 
+            margin: 30px auto; 
             max-width: 600px;
             border: 1px solid rgba(255,255,255,0.3);
+            display: block; /* 默认显示的放在这里 */
         }
-        .wish { margin-top: 20px; font-style: italic; color: #ecf0f1; }
+        .locked { display: none; } /* 初始隐藏的关卡 */
+        
+        .wish { margin: 20px 0; font-style: italic; color: #ecf0f1; }
         button {
-            padding: 10px 20px; 
+            padding: 12px 25px; 
             cursor: pointer; 
-            border-radius: 5px; 
+            border-radius: 8px; 
             border: none; 
             font-weight: bold;
-            margin: 5px;
+            margin: 10px 5px;
+            transition: 0.3s;
         }
         input {
-            padding: 10px; 
-            border-radius: 5px; 
+            padding: 12px; 
+            border-radius: 8px; 
             border: none; 
             margin-bottom: 10px;
-            color: black;
+            width: 200px;
+            color: #333;
         }
+        img { width: 250px; border-radius: 12px; margin-top: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
     </style>
 </head>
 <body>
 
     <div class="card" style="max-width: 300px;">
-        <h3>🔋 能量储备：<span id="energy">0</span></h3>
-        <button onclick="addEnergy()" style="background: #27ae60; color: white;">点击注入能量</button>
+        <h3>🔋 14岁能量：<span id="energy">0</span></h3>
+        <button onclick="addEnergy()" style="background: #27ae60; color: white;">注入能量</button>
     </div>
 
     <h1>距离 茹浚峰 14 岁生日还有：</h1>
     <div id="timer">计算中...</div>
     <p class="wish">“茹sir 正在为你打造一个专属空间...”</p>
 
-    <div class="card" style="border: 2px solid #3498db;">
+    <div id="level-1" class="card" style="border: 2px solid #3498db;">
         <h3>🎮 第一关：记忆挑战</h3>
         <p>老爸问你：咱们家第一辆车的颜色是什么？</p>
-        <input type="text" id="answer" placeholder="输入颜色...">
-        <button onclick="checkGame()" style="background: #3498db; color: white;">提交答案</button>
-        <div id="level-2" class="card" style="display: none; border: 2px solid #f1c40f;">
-        <h3>🎮 第二关：逻辑运算</h3>
-        <p>儿子，14岁的密码是：(你的生日月份 × 10) + (你的生日日期) = ?</p>
-        <input type="number" id="math-answer" placeholder="输入计算结果...">
-        <button onclick="checkLevel2()" style="background: #f1c40f; color: black;">解锁下一关</button>
-        
-       <div id="reward" style="display: none; margin-top: 20px;">
+        <input type="text" id="ans1" placeholder="输入颜色...">
+        <br>
+        <button onclick="checkLevel1()" style="background: #3498db; color: white;">提交答案</button>
+        <div id="reward-1" class="locked">
             <p>🎊 答对了！这是你 3 岁时的样子：</p>
-            <img src="https://via.placeholder.com/200" alt="童年照片" style="width: 200px; border-radius: 10px;">
-            <p><b>解锁进度：1/14</b></p>
-        </div>
-        <div id="reward-2" style="display: none; margin-top: 20px;">
-            <p>🎊 聪明！这是你 7 岁第一次背起书包的样子：</p>
-            <img src="school-me.jpg" alt="上学照片" style="width: 200px; border-radius: 10px;">
-            <p><b>解锁进度：2/14</b></p>
-            <button onclick="showLevel3()" style="background: #e67e22; color: white;">前往第三关</button>
+            <img src="baby-me.jpg" alt="3岁照片">
+            <p><b>解锁进度：1/3</b></p>
+            <p style="color: #f1c40f;">↓ 第二关已在下方开启 ↓</p>
         </div>
     </div>
 
-    <div id="level-3" class="card" style="display: none; border: 2px solid #e74c3c;">
-        <h3>🎮 第三关：终极默契</h3>
-        <p>老爸最喜欢的运动（或爱好）是什么？</p>
-        <input type="text" id="hobby-answer" placeholder="输入两个字...">
-        <button onclick="checkLevel3()" style="background: #e74c3c; color: white;">打开秘密大门</button>
+    <div id="level-2" class="card locked" style="border: 2px solid #f1c40f;">
+        <h3>🎮 第二关：逻辑挑战</h3>
+        <p>公式题：(你的生日月份 5 × 10) + (你的日期 12) = ?</p>
+        <input type="number" id="ans2" placeholder="输入数字...">
+        <br>
+        <button onclick="checkLevel2()" style="background: #f1c40f; color: black;">解锁关卡</button>
+        <div id="reward-2" class="locked">
+            <p>🎊 逻辑满分！这是你上学时的样子：</p>
+            <img src="school-me.jpg" alt="上学照片">
+            <p><b>解锁进度：2/3</b></p>
+            <p style="color: #e74c3c;">↓ 终极挑战已开启 ↓</p>
+        </div>
+    </div>
+
+    <div id="level-3" class="card locked" style="border: 2px solid #e74c3c;">
+        <h3>🎮 第三关：父子默契</h3>
+        <p>老爸最喜欢的爱好是什么？</p>
+        <input type="text" id="ans3" placeholder="两个字...">
+        <br>
+        <button onclick="checkLevel3()" style="background: #e74c3c; color: white;">通关</button>
+    </div>
+
+    <div id="secret-gate" class="card locked" style="background: rgba(0,0,0,0.5);">
+        <h3>🔐 秘密基地已解锁</h3>
+        <button onclick="checkPassword()" style="background: #8e44ad; color: white;">输入暗号进入</button>
     </div>
 
     <script>
-        // 在原有 checkGame() 函数里增加一行，让它能开启第二关
-        function checkGame() {
-            const ans = document.getElementById('answer').value;
-            if (ans === "黄色" || ans === "yellow") {
-                document.getElementById('reward').style.display = "block";
-                document.getElementById('level-2').style.display = "block"; // 开启第二关容器
-                alert("第一关通过！第二关已解锁。");
-            } else {
-                alert("再想想？");
-            }
-        }
-
-        // 第二关逻辑
-        function checkLevel2() {
-            const mathAns = document.getElementById('math-answer').value;
-            // 假设 5月12日：(5*10) + 12 = 62
-            if (mathAns === "62") { 
-                document.getElementById('reward-2').style.display = "block";
-                alert("逻辑满分！");
-            } else {
-                alert("算错啦，再算一遍？");
-            }
-        }
-
-        // 开启第三关
-        function showLevel3() {
-            document.getElementById('level-3').style.display = "block";
-            window.scrollTo(0, document.body.scrollHeight); // 自动滚动到底部
-        }
-
-        // 第三关逻辑
-        function checkLevel3() {
-            const hobby = document.getElementById('hobby-answer').value;
-            if (hobby === "编程" || hobby === "跑步") { // 换成你的真实爱好
-                alert("默契满分！你已获得进入秘密基地的权限。");
-                checkPassword(); // 直接触发暗号弹窗
-            } else {
-                alert("看来咱们还得一起多运动运动呀！");
-            }
-        }
-    </script>
-    </div>
-
-    <div class="card" style="background: rgba(0,0,0,0.3);">
-        <h3>🔐 秘密基地入口</h3>
-        <button onclick="checkPassword()" style="background: #8e44ad; color: white;">验证暗号进入</button>
-    </div>
-
-    <script>
-        // 1. 能量逻辑
-        let count = 0;
-        function addEnergy() {
-            count += 1;
-            document.getElementById('energy').innerText = count;
-            if (count === 14) alert("🎉 能量充满！解锁 14 岁专属 Buff！");
-        }
-
-        // 2. 倒计时逻辑
+        // 1. 倒计时
         function updateTimer() {
             const birthday = new Date('2026-05-12T00:00:00');
             const now = new Date();
             const diff = birthday - now;
-            if (diff <= 0) {
-                document.getElementById('timer').innerText = "🎂 生日快乐！";
-                return;
-            }
-            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-            const mins = Math.floor((diff / 1000 / 60) % 60);
-            const secs = Math.floor((diff / 1000) % 60);
-            document.getElementById('timer').innerText = `${days}天 ${hours}小时 ${mins}分 ${secs}秒`;
+            if (diff <= 0) { document.getElementById('timer').innerText = "🎂 生日快乐！"; return; }
+            const d = Math.floor(diff / 86400000);
+            const h = Math.floor((diff / 3600000) % 24);
+            const m = Math.floor((diff / 60000) % 60);
+            const s = Math.floor((diff / 1000) % 60);
+            document.getElementById('timer').innerText = `${d}天 ${h}小时 ${m}分 ${s}秒`;
         }
         setInterval(updateTimer, 1000);
         updateTimer();
 
-        // 3. 游戏验证
-        function checkGame() {
-            const ans = document.getElementById('answer').value;
-            if (ans === "黄色" || ans === "yellow") { // 看到你截图里输入了黄色，这里改成了黄色
-                document.getElementById('reward').style.display = "block";
-                alert("验证成功！记忆碎片已解锁。");
-            } else {
-                alert("记错了吧？再回去翻翻老照片？");
-            }
+        // 2. 能量
+        let energyCount = 0;
+        function addEnergy() {
+            energyCount++;
+            document.getElementById('energy').innerText = energyCount;
+            if(energyCount === 14) alert("🎉 能量充满！14岁Buff已激活！");
         }
 
-        // 4. 秘密基地暗号逻辑（修正处：已放入 script 标签内）
+        // 3. 第一关逻辑
+        function checkLevel1() {
+            const val = document.getElementById('ans1').value;
+            if (val === "黄色" || val === "yellow") {
+                document.getElementById('reward-1').style.display = "block";
+                document.getElementById('level-2').style.display = "block"; // 开启下一关
+                window.scrollTo(0, document.body.scrollHeight);
+            } else { alert("记错啦，再想想？"); }
+        }
+
+        // 4. 第二关逻辑
+        function checkLevel2() {
+            const val = document.getElementById('ans2').value;
+            if (val === "62") {
+                document.getElementById('reward-2').style.display = "block";
+                document.getElementById('level-3').style.display = "block"; // 开启下一关
+                window.scrollTo(0, document.body.scrollHeight);
+            } else { alert("再算算，这是咱们的密码！"); }
+        }
+
+        // 5. 第三关逻辑
+        function checkLevel3() {
+            const val = document.getElementById('ans3').value;
+            if (val === "编程" || val === "跑步") {
+                document.getElementById('secret-gate').style.display = "block";
+                window.scrollTo(0, document.body.scrollHeight);
+                alert("🎉 全线通关！基地大门已开启。");
+            } else { alert("不对哦，老爸最喜欢的那个是..."); }
+        }
+
+        // 6. 暗号进入
         function checkPassword() {
-            const password = prompt("请输入咱们爷俩的暗号：");
-            if (password === "0512") {
-                alert("身份确认，老爸有话对你说...");
+            const pw = prompt("请输入咱们爷俩的暗号（提示：他的生日）：");
+            if (pw === "0512") {
                 window.location.href = "message.html";
-            } else {
-                alert("暗号不对，再想想？");
-            }
+            } else { alert("暗号不对！"); }
         }
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
