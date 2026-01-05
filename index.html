@@ -65,11 +65,69 @@
         <p>老爸问你：咱们家第一辆车的颜色是什么？</p>
         <input type="text" id="answer" placeholder="输入颜色...">
         <button onclick="checkGame()" style="background: #3498db; color: white;">提交答案</button>
-        <div id="reward" style="display: none; margin-top: 20px;">
-            <p>🎊 答对了！这是你 3 岁时的样子：</p>
-           <img src="baby-me.jpg" alt="童年照片" style="width: 200px; border-radius: 10px;">
-            <p><b>解锁进度：1/14</b></p>
+        <div id="level-2" class="card" style="display: none; border: 2px solid #f1c40f;">
+        <h3>🎮 第二关：逻辑运算</h3>
+        <p>儿子，14岁的密码是：(你的生日月份 × 10) + (你的生日日期) = ?</p>
+        <input type="number" id="math-answer" placeholder="输入计算结果...">
+        <button onclick="checkLevel2()" style="background: #f1c40f; color: black;">解锁下一关</button>
+        
+        <div id="reward-2" style="display: none; margin-top: 20px;">
+            <p>🎊 聪明！这是你 7 岁第一次背起书包的样子：</p>
+            <img src="school-me.jpg" alt="上学照片" style="width: 200px; border-radius: 10px;">
+            <p><b>解锁进度：2/14</b></p>
+            <button onclick="showLevel3()" style="background: #e67e22; color: white;">前往第三关</button>
         </div>
+    </div>
+
+    <div id="level-3" class="card" style="display: none; border: 2px solid #e74c3c;">
+        <h3>🎮 第三关：终极默契</h3>
+        <p>老爸最喜欢的运动（或爱好）是什么？</p>
+        <input type="text" id="hobby-answer" placeholder="输入两个字...">
+        <button onclick="checkLevel3()" style="background: #e74c3c; color: white;">打开秘密大门</button>
+    </div>
+
+    <script>
+        // 在原有 checkGame() 函数里增加一行，让它能开启第二关
+        function checkGame() {
+            const ans = document.getElementById('answer').value;
+            if (ans === "黄色" || ans === "yellow") {
+                document.getElementById('reward').style.display = "block";
+                document.getElementById('level-2').style.display = "block"; // 开启第二关容器
+                alert("第一关通过！第二关已解锁。");
+            } else {
+                alert("再想想？");
+            }
+        }
+
+        // 第二关逻辑
+        function checkLevel2() {
+            const mathAns = document.getElementById('math-answer').value;
+            // 假设 5月12日：(5*10) + 12 = 62
+            if (mathAns === "62") { 
+                document.getElementById('reward-2').style.display = "block";
+                alert("逻辑满分！");
+            } else {
+                alert("算错啦，再算一遍？");
+            }
+        }
+
+        // 开启第三关
+        function showLevel3() {
+            document.getElementById('level-3').style.display = "block";
+            window.scrollTo(0, document.body.scrollHeight); // 自动滚动到底部
+        }
+
+        // 第三关逻辑
+        function checkLevel3() {
+            const hobby = document.getElementById('hobby-answer').value;
+            if (hobby === "编程" || hobby === "跑步") { // 换成你的真实爱好
+                alert("默契满分！你已获得进入秘密基地的权限。");
+                checkPassword(); // 直接触发暗号弹窗
+            } else {
+                alert("看来咱们还得一起多运动运动呀！");
+            }
+        }
+    </script>
     </div>
 
     <div class="card" style="background: rgba(0,0,0,0.3);">
@@ -128,6 +186,7 @@
     </script>
 </body>
 </html>
+
 
 
 
