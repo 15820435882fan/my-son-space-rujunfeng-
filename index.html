@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>14岁生日倒计时</title>
+    <style>
+        body { text-align: center; background: blue; color: white; font-family: sans-serif; padding-top: 50px; }
+        #timer { font-size: 3rem; color: #e74c3c; font-weight: bold; }
+        .wish { margin-top: 20px; font-style: italic; }
+    </style>
+</head>
+<div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px; margin: 20px auto; width: 300px;">
+    <h3>🔋 能量储备：<span id="energy">0</span></h3>
+    <button onclick="addEnergy()" style="padding: 10px 20px; cursor: pointer; border-radius: 5px; border: none; background: #27ae60; color: white;">
+        点击注入能量
+    </button>
+</div>
+
+<script>
+    // 这是我们增加的逻辑
+    let count = 0;
+    function addEnergy() {
+        count += 1;
+        document.getElementById('energy').innerText = count;
+        
+        // 彩蛋：当点击到 14 次时（对应 14 岁）
+        if (count === 14) {
+            alert("🎉 能量充满！解锁 14 岁专属 Buff！");
+        }
+    }
+</script>
+    <h1>距离茹浚峰 14 岁生日还有：</h1>
+    <div id="timer">计算中...</div>
+    <p class="wish">“茹sir 正在为你打造一个专属空间...”</p>
+
+    <script>
+        function updateTimer() {
+            const birthday = new Date('2026-05-12T00:00:00'); // 设定目标日期
+            const now = new Date();
+            const diff = birthday - now;
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+            const mins = Math.floor((diff / 1000 / 60) % 60);
+            const secs = Math.floor((diff / 1000) % 60);
+
+            document.getElementById('timer').innerText = 
+                `${days}天 ${hours}小时 ${mins}分 ${secs}秒`;
+        }
+        setInterval(updateTimer, 1000);
+    </script>
+</body>
+</html>
