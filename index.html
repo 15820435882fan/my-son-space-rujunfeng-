@@ -8,6 +8,15 @@
         .wish { margin-top: 20px; font-style: italic; }
     </style>
 </head>
+    function checkPassword() {
+    const password = prompt("请输入咱们爷俩的暗号：");
+    if (password === "0512") { // 假设密码是他的生日
+        alert("身份确认，老爸有话对你说...");
+        window.location.href = "message.html"; // 跳转到隐藏页面
+    } else {
+        alert("暗号不对，再想想？");
+    }
+}
 <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px; margin: 20px auto; width: 300px;">
     <h3>🔋 能量储备：<span id="energy">0</span></h3>
     <button onclick="addEnergy()" style="padding: 10px 20px; cursor: pointer; border-radius: 5px; border: none; background: #27ae60; color: white;">
@@ -50,5 +59,6 @@
     </script>
 </body>
 </html>
+
 
 
