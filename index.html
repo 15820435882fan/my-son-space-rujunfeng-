@@ -1,92 +1,150 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>14岁生日倒计时</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>14岁生日倒计时 - 茹浚峰专属空间</title>
     <style>
-        body { text-align: center; background: blue; color: white; font-family: sans-serif; padding-top: 50px; }
-        #timer { font-size: 3rem; color: #e74c3c; font-weight: bold; }
-        .wish { margin-top: 20px; font-style: italic; }
+        /* 页面整体样式 */
+        body { 
+            text-align: center; 
+            background: #0000FF; /* 纯蓝色背景 */
+            color: white; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            padding: 50px 20px; 
+            margin: 0;
+        }
+        
+        /* 倒计时样式 */
+        #timer { 
+            font-size: 2.5rem; 
+            color: #ff4d4d; 
+            font-weight: bold; 
+            background: rgba(255,255,255,0.1);
+            display: inline-block;
+            padding: 15px 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        /* 通用卡片样式 */
+        .card {
+            background: rgba(255,255,255,0.15); 
+            padding: 20px; 
+            border-radius: 15px; 
+            margin: 20px auto; 
+            max-width: 500px;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .wish { margin-top: 20px; font-style: italic; color: #ecf0f1; }
+        
+        button {
+            padding: 10px 20px; 
+            cursor: pointer; 
+            border-radius: 5px; 
+            border: none; 
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        button:hover { opacity: 0.8; transform: scale(1.05); }
+        
+        input {
+            padding: 10px; 
+            border-radius: 5px; 
+            border: none; 
+            margin-bottom: 10px;
+        }
     </style>
 </head>
-   
-<div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px; margin: 20px auto; width: 300px;">
-    <h3>🔋 能量储备：<span id="energy">0</span></h3>
-    <button onclick="addEnergy()" style="padding: 10px 20px; cursor: pointer; border-radius: 5px; border: none; background: #27ae60; color: white;">
-        点击注入能量
-    </button>
-</div>
+<body>
 
-<script>
-    // 这是我们增加的逻辑
-    let count = 0;
-    function addEnergy() {
-        count += 1;
-        document.getElementById('energy').innerText = count;
-        
-        // 彩蛋：当点击到 14 次时（对应 14 岁）
-        if (count === 14) {
-            alert("🎉 能量充满！解锁 14 岁专属 Buff！");
-        }
-    }
-</script>
-    <h1>距离茹浚峰 14 岁生日还有：</h1>
+    <h1>距离 茹浚峰 14 岁生日还有：</h1>
     <div id="timer">计算中...</div>
     <p class="wish">“茹sir 正在为你打造一个专属空间...”</p>
 
+    <div class="card">
+        <h3>🔋 能量储备：<span id="energy">0</span></h3>
+        <button onclick="addEnergy()" style="background: #27ae60; color: white;">
+            点击注入能量
+        </button>
+    </div>
+
+    <div class="card" style="border: 2px solid #3498db;">
+        <h3>🎮 第一关：记忆挑战</h3>
+        <p>老爸问你：咱们家第一辆车的颜色是什么？</p>
+        <input type="text" id="answer" placeholder="输入颜色...">
+        <br>
+        <button onclick="checkGame()" style="background: #3498db; color: white;">提交答案</button>
+        
+        <div id="reward" style="display: none; margin-top: 20px;">
+            <p>🎊 答对了！这是你 3 岁时的样子：</p>
+            <img src="https://via.placeholder.com/200" alt="童年照片" style="width: 200px; border-radius: 10px;">
+            <p><b>解锁进度：1/14</b></p>
+        </div>
+    </div>
+
+    <div class="card" style="background: rgba(0,0,0,0.3);">
+        <h3>🔐 秘密基地</h3>
+        <p>这里只有咱们爷俩能进</p>
+        <button onclick="checkPassword()" style="background: #8e44ad; color: white;">输入暗号进入</button>
+    </div>
+
     <script>
+        // 1. 倒计时逻辑
         function updateTimer() {
-            const birthday = new Date('2026-05-12T00:00:00'); // 设定目标日期
+            const birthday = new Date('2026-05-12T00:00:00');
             const now = new Date();
             const diff = birthday - now;
+
+            if (diff <= 0) {
+                document.getElementById('timer').innerText = "🎂 生日快乐！";
+                return;
+            }
 
             const days = Math.floor(diff / (1000 * 60 * 60 * 24));
             const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
             const mins = Math.floor((diff / 1000 / 60) % 60);
             const secs = Math.floor((diff / 1000) % 60);
 
-            document.getElementById('timer').innerText = 
-                `${days}天 ${hours}小时 ${mins}分 ${secs}秒`;
+            document.getElementById('timer').innerText = `${days}天 ${hours}小时 ${mins}分 ${secs}秒`;
         }
         setInterval(updateTimer, 1000);
+        updateTimer(); // 立即执行一次
+
+        // 2. 能量注入逻辑
+        let count = 0;
+        function addEnergy() {
+            count += 1;
+            document.getElementById('energy').innerText = count;
+            if (count === 14) {
+                alert("🎉 能量充满！解锁 14 岁专属 Buff！");
+            }
+        }
+
+        // 3. 游戏验证逻辑
+        function checkGame() {
+            const ans = document.getElementById('answer').value;
+            if (ans === "白色" || ans === "white") {
+                document.getElementById('reward').style.display = "block";
+                alert("验证成功！记忆碎片已解锁。");
+            } else {
+                alert("记错了吧？再回去翻翻老照片？");
+            }
+        }
+
+        // 4. 密码进入逻辑
+        function checkPassword() {
+            const password = prompt("请输入咱们爷俩的暗号：");
+            if (password === "0512") {
+                alert("身份确认，老爸有话对你说...");
+                // 注意：由于你现在还没有 message.html，点击后会报404，这是正常的
+                window.location.href = "message.html"; 
+            } else {
+                alert("暗号不对，再想想？");
+            }
+        }
     </script>
-    <div id="game-zone" style="background: #34495e; padding: 30px; border-radius: 15px; margin-top: 30px; border: 2px solid #3498db;">
-    <h3>🎮 第一关：记忆挑战</h3>
-    <p>老爸问你：咱们家第一辆车的颜色是什么？</p>
-    <input type="text" id="answer" placeholder="输入颜色..." style="padding: 10px; border-radius: 5px; border: none;">
-    <button onclick="checkGame()" style="padding: 10px 20px; background: #3498db; color: white; border: none; cursor: pointer;">提交答案</button>
-    
-    <div id="reward" style="display: none; margin-top: 20px;">
-        <p>🎊 答对了！这是你 3 岁时的样子：</p>
-        <img src="https://via.placeholder.com/200" alt="童年照片" style="width: 200px; border-radius: 10px;">
-        <p><b>解锁进度：1/14</b></p>
-    </div>
-</div>
-
-<script>
-function checkGame() {
-    const ans = document.getElementById('answer').value;
-    // 假设答案是“白色”，你可以改成你们真实的答案
-    if (ans === "白色" || ans === "white") {
-        document.getElementById('reward').style.display = "block";
-        alert("验证成功！记忆碎片已解锁。");
-    } else {
-        alert("记错了吧？再回去翻翻老照片？");
-    }
-}
-</script>
-     function checkPassword() {
-    const password = prompt("请输入咱们爷俩的暗号：");
-    if (password === "0512") { // 假设密码是他的生日
-        alert("身份确认，老爸有话对你说...");
-        window.location.href = "message.html"; // 跳转到隐藏页面
-    } else {
-        alert("暗号不对，再想想？");
-    }
-}
 </body>
-    
 </html>
-
-
-
-
