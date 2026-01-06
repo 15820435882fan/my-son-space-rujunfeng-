@@ -84,7 +84,7 @@
 
     <div id="level-2" class="card locked" style="border: 2px solid #f1c40f;">
         <h3>🎮 第二关：逻辑挑战</h3>
-        <p>公式题：(你的生日月份 5 × 10) + (你的日期 12) = ?</p>
+        <p>公式题：(老爸的生日月份  × 10) + (日期 ) = ?</p>
         <input type="number" id="ans2" placeholder="输入数字...">
         <br>
         <button onclick="checkLevel2()" style="background: #f1c40f; color: black;">解锁关卡</button>
@@ -136,7 +136,7 @@
         // 3. 第一关逻辑
         function checkLevel1() {
             const val = document.getElementById('ans1').value;
-            if (val === "黄色" || val === "yellow") {
+            if (val === "银色" || val === "silver") {
                 document.getElementById('reward-1').style.display = "block";
                 document.getElementById('level-2').style.display = "block"; // 开启下一关
                 window.scrollTo(0, document.body.scrollHeight);
@@ -146,7 +146,7 @@
         // 4. 第二关逻辑
         function checkLevel2() {
             const val = document.getElementById('ans2').value;
-            if (val === "62") {
+            if (val === "50") {
                 document.getElementById('reward-2').style.display = "block";
                 document.getElementById('level-3').style.display = "block"; // 开启下一关
                 window.scrollTo(0, document.body.scrollHeight);
@@ -156,7 +156,7 @@
         // 5. 第三关逻辑
         function checkLevel3() {
             const val = document.getElementById('ans3').value;
-            if (val === "编程" || val === "跑步") {
+            if (val === "编程" || val === "掼蛋") {
                 document.getElementById('secret-gate').style.display = "block";
                 window.scrollTo(0, document.body.scrollHeight);
                 alert("🎉 全线通关！基地大门已开启。");
@@ -173,3 +173,4 @@
     </script>
 </body>
 </html>
+
