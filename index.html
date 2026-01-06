@@ -12,7 +12,7 @@
             font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif; 
             padding: 50px 20px; 
             margin: 0;
-            scroll-behavior: smooth; /* 让滚动更丝滑 */
+            scroll-behavior: smooth;
         }
         #timer { 
             font-size: 2.2rem; 
@@ -32,10 +32,8 @@
             margin: 30px auto; 
             max-width: 600px;
             border: 1px solid rgba(255,255,255,0.3);
-            display: block; /* 默认显示的放在这里 */
         }
-        .locked { display: none; } /* 初始隐藏的关卡 */
-        
+        .locked { display: none; } 
         .wish { margin: 20px 0; font-style: italic; color: #ecf0f1; }
         button {
             padding: 12px 25px; 
@@ -77,21 +75,21 @@
         <div id="reward-1" class="locked">
             <p>🎊 答对了！这是你 3 岁时的样子：</p>
             <img src="baby-me.jpg" alt="3岁照片">
-            <p><b>解锁进度：1/3</b></p>
-            <p style="color: #f1c40f;">↓ 第二关已在下方开启 ↓</p>
+            <p><b>解锁进度：1/14</b></p>
+            <p style="color: #f1c40f;">↓ 第二关已开启 ↓</p>
         </div>
     </div>
 
     <div id="level-2" class="card locked" style="border: 2px solid #f1c40f;">
         <h3>🎮 第二关：逻辑挑战</h3>
-        <p>公式题：(老爸的生日月份  × 10) + (日期 ) = ?</p>
+        <p>公式题：(老爸的生日月份 × 10) + (日期) = ?</p>
         <input type="number" id="ans2" placeholder="输入数字...">
         <br>
         <button onclick="checkLevel2()" style="background: #f1c40f; color: black;">解锁关卡</button>
         <div id="reward-2" class="locked">
             <p>🎊 逻辑满分！这是你上学时的样子：</p>
             <img src="school-me.jpg" alt="上学照片">
-            <p><b>解锁进度：2/3</b></p>
+            <p><b>解锁进度：2/14</b></p>
             <p style="color: #e74c3c;">↓ 第三关已开启 ↓</p>
         </div>
     </div>
@@ -101,16 +99,16 @@
         <p>老爸最喜欢的爱好是什么？</p>
         <input type="text" id="ans3" placeholder="两个字...">
         <br>
-        <button onclick="checkLevel3()" style="background: #e74c3c; color: white;">↓ 第四关已开启 ↓</p>
+        <button onclick="checkLevel3()" style="background: #e74c3c; color: white;">提交验证</button>
     </div>
+
     <div id="level-4" class="card locked" style="border: 2px solid #1abc9c;">
         <h3>🎮 第四关：旅行足迹</h3>
-        <p>那年咱们全家一起去旅游，那个有大海（或名胜）的城市是？</p>
+        <p>那年咱们全家一起去旅游，那个有大海的城市是？</p>
         <input type="text" id="ans4" placeholder="输入城市名...">
         <br>
         <button onclick="checkLevel4()" style="background: #1abc9c; color: white;">解锁回忆</button>
         <div id="reward-4" class="locked">
-            <p>🎊 没错！那是咱们玩得非常开心的一次：</p>
             <img src="travel-me.jpg" alt="旅行照片">
             <p><b>解锁进度：4/14</b></p>
         </div>
@@ -118,7 +116,7 @@
 
     <div id="level-5" class="card locked" style="border: 2px solid #9b59b6;">
         <h3>🎮 第五关：未来代码</h3>
-        <p>如果给 14 岁的自己一个关键词，你觉得是？（提示：拼音“nuli”）</p>
+        <p>如果给 14 岁的自己一个关键词，你觉得是？（拼音“nuli”）</p>
         <input type="text" id="ans5" placeholder="输入对应的汉字...">
         <br>
         <button onclick="checkLevel5()" style="background: #9b59b6; color: white;">激活潜力</button>
@@ -130,7 +128,6 @@
     </div>
 
     <script>
-        // 1. 倒计时
         function updateTimer() {
             const birthday = new Date('2026-05-12T00:00:00');
             const now = new Date();
@@ -145,7 +142,6 @@
         setInterval(updateTimer, 1000);
         updateTimer();
 
-        // 2. 能量
         let energyCount = 0;
         function addEnergy() {
             energyCount++;
@@ -153,58 +149,59 @@
             if(energyCount === 14) alert("🎉 能量充满！14岁Buff已激活！");
         }
 
-        // 3. 第一关逻辑
         function checkLevel1() {
             const val = document.getElementById('ans1').value;
             if (val === "银色" || val === "silver") {
                 document.getElementById('reward-1').style.display = "block";
-                document.getElementById('level-2').style.display = "block"; // 开启下一关
+                document.getElementById('level-2').style.display = "block";
                 window.scrollTo(0, document.body.scrollHeight);
-            } else { alert("记错啦，再想想？"); }
+            } else { alert("不对哦！"); }
         }
 
-        // 4. 第二关逻辑
         function checkLevel2() {
-            const val = document.getElementById('ans2').value;
-            if (val === "50") {
+            if (document.getElementById('ans2').value === "50") {
                 document.getElementById('reward-2').style.display = "block";
-                document.getElementById('level-3').style.display = "block"; // 开启下一关
+                document.getElementById('level-3').style.display = "block";
                 window.scrollTo(0, document.body.scrollHeight);
-            } else { alert("再算算，这是咱们的密码！"); }
+            } else { alert("算错啦！"); }
         }
 
-       // 修改第三关逻辑：让它开启第四关
         function checkLevel3() {
             const val = document.getElementById('ans3').value;
             if (val === "编程" || val === "掼蛋") {
                 document.getElementById('level-4').style.display = "block";
                 window.scrollTo(0, document.body.scrollHeight);
-                alert("🎉 默契通关！进入第四关。");
-            } else { alert("不对哦，老爸最喜欢的那个是..."); }
+                alert("🎉 第三关通过！");
+            } else { alert("还没对上信号哦。"); }
         }
 
-        // 第四关逻辑
         function checkLevel4() {
             const val = document.getElementById('ans4').value;
-            if (val === "大理" || val === "北京") { // 换成真实的城市
+            if (val === "大理" || val === "北京") {
                 document.getElementById('reward-4').style.display = "block";
                 document.getElementById('level-5').style.display = "block";
                 window.scrollTo(0, document.body.scrollHeight);
-            } else { alert("那个地方有很多好吃的/好玩的，再想想？"); }
+            } else { alert("再想想？"); }
         }
 
-        // 第五关逻辑：通往最终大门
         function checkLevel5() {
-            const val = document.getElementById('ans5').value;
-            if (val === "努力" || val === "成长") {
+            if (document.getElementById('ans5').value === "努力") {
                 document.getElementById('secret-gate').style.display = "block";
                 window.scrollTo(0, document.body.scrollHeight);
-                alert("🎊 恭喜你！所有关卡全部通关！秘密基地大门已开启。");
-            } else { alert("提示：两个字，代表你现在的状态。"); }
+                alert("🎊 通关成功！");
+            } else { alert("提示：两个字。"); }
+        }
+
+        // 这里是修复的关键：补齐跳转函数
+        function checkPassword() {
+            const pw = prompt("请输入暗号（提示：他的生日）：");
+            if (pw === "0512") {
+                window.location.href = "message.html";
+            } else if (pw !== null) {
+                alert("暗号不对！");
+            }
         }
     </script>
-<script src="https://cdn.bootcdn.net/ajax/libs/canvas-nest.js/2.0.4/canvas-nest.js" color="255,255,255" opacity="0.7" zIndex="-1" count="150"></script></body>
+    <script src="https://cdn.bootcdn.net/ajax/libs/canvas-nest.js/2.0.4/canvas-nest.js" color="255,255,255" opacity="0.7" zIndex="-1" count="150"></script>
+</body>
 </html>
-
-
-
